@@ -7,6 +7,14 @@ Point::Point(vector<double> __point) {
 	point=__point;
 }
 
+Point::Point(string __line){
+	stringstream ss(__line);
+	double tmp;
+	while(ss>>tmp){
+		point.push_back(tmp);
+		dimension++;
+	}
+}
 void Point::print() {
 	for (vector<double>::iterator it = point.begin() ; it != point.end(); ++it)
 		cout << *it<< ' ';
@@ -33,10 +41,24 @@ double Point::dist(Point &p) {
 	}
 }
 
-vector<double> Point::coords(){
-	return point;
+Point Point::operator+(Point &p1,Point &p2){
+	if(p1.dimension!=p2.dimension) exit(-1);
+	else{
+		vector<double< tmp;
+		for(int i=0;i<dimension;i++){
+			tmp.push_back(p1.point[i]+p2.point[i]);
+		}
+		return Point(tmp);
+	}
 }
 
+Point Point::operator/(Point &p,int count){
+	vector<double> tmp;
+	for(int i=0;i<dimension;i++){
+		tmp.push_back(p.point[i]/count);
+	}
+	return Point(tmp);
+}
 /**int main() {
 
 	vector<double> temp1,temp2;
