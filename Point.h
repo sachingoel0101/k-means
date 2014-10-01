@@ -5,7 +5,7 @@ public:
     void print();
     int get_dimension();
     double dist(Point &p);
-	double coordinate(int index);
+	vector<double> coords();
     Point(vector<double> v);
 protected:
     vector<double> point;

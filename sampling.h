@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 #include <random>
-#include "point.h"
+#include "Point.h"
 
 using namespace std;
 
@@ -9,7 +9,7 @@ class sampling
 public:
     sampling(string x,int k);
     //vector<point> generate();
-    vector<point> generate2(vector<point> points);
+    vector<Point> generate2(vector<Point> points);
     ~sampling();
 
 protected:

@@ -1,5 +1,4 @@
 #include <bits/stdc++.h>
-#include "point.h"
 #include "sampling.h"
 
 using namespace std;
@@ -9,7 +8,7 @@ class centers
 public:
     centers(string x, int y,int z,int a);
     //~centers();
-    vector<point> produce();
+    vector<Point> produce();
 
 protected:
     string filename;
@@ -18,7 +17,7 @@ protected:
     int m;
 
 private:
-    point get_centre(vector<point> candidates);
+    Point get_centre(vector<Point> candidates);
 };
 
 centers::centers(string x,int y,int z, int a) {
@@ -29,16 +28,16 @@ centers::centers(string x,int y,int z, int a) {
 }
 
 
-vector<point> centers::produce() {
-    vector<point> ret;
+vector<Point> centers::produce() {
+    vector<Point> ret;
 
     for(int i=0; i<k; i++) {
 
         sampling s(filename,n);
 
-        vector<point> jk = s.generate2(ret);
+        vector<Point> jk = s.generate2(ret);
 
-        point to_add = get_centre(jk);
+        Point to_add = get_centre(jk);
         ret.push_back(to_add);
     }
 
@@ -46,7 +45,7 @@ vector<point> centers::produce() {
 }
 
 
-point centers::get_centre(vector<point> candidates) {
+Point centers::get_centre(vector<Point> candidates) {
 
     //choose top m candidates
 

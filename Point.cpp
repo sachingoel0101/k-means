@@ -33,9 +33,8 @@ double Point::dist(Point &p) {
 	}
 }
 
-double Point::coordinate(int index){
-	if(index>=dimension) exit(-1);
-	else return point[index];
+vector<double> Point::coords(){
+	return point;
 }
 
 /**int main() {

@@ -135,7 +135,7 @@ vector<point> sampling::generate() {
 }
 */
 
-vector<point> sampling::generate2(vector<point> points) {
+vector<Point> sampling::generate2(vector<Point> points) {
 
     srand(time(NULL));
 
@@ -143,7 +143,7 @@ vector<point> sampling::generate2(vector<point> points) {
 
     int remaining = centers;
 
-    vector<point> current_set;
+    vector<Point> current_set;
 
     if(points.size()==0) {
         //sample uniformly
@@ -175,12 +175,12 @@ vector<point> sampling::generate2(vector<point> points) {
         while(getline(file,line)) {
             if(temp== (*it)) {
                 stringstream ss(line);
-                vector<int> p;
+                vector<double> p;
 
                 while(ss>>temp) {
                     p.push_back(temp);
                 }
-                point p1(p);
+                Point p1(p);
                 current_set.push_back(p1);
                 it++;
                 if(it==ans.end()) break;
@@ -198,12 +198,12 @@ vector<point> sampling::generate2(vector<point> points) {
         while(getline(file,line)) {
 
             stringstream ss(line);
-            vector<int> p;
+            vector<double> p;
             int temp;
             while(ss>>temp) {
                 p.push_back(temp);
             }
-            point p1(p);
+            Point p1(p);
 
             double min_dist = p1.dist(points[0]);
             for(int i=1; i<points.size(); i++) {
@@ -233,12 +233,12 @@ vector<point> sampling::generate2(vector<point> points) {
         while(getline(file,line)) {
             if(temp== (*it)) {
                 stringstream ss(line);
-                vector<int> p;
+                vector<double> p;
 
                 while(ss>>temp) {
                     p.push_back(temp);
                 }
-                point p1(p);
+                Point p1(p);
                 current_set.push_back(p1);
                 it++;
                 if(it==ans.end()) break;

@@ -2,7 +2,7 @@
 #include "cluster.h"
 using namespace std;
 
-cluster::cluster(string __filename,int __dimension, int __num_cluster, point* __means) {
+cluster::cluster(string __filename,int __dimension, int __num_cluster, vector<Point> __means) {
     filename=__filename;
     dimension=__dimension;
     num_cluster=__num_cluster;
@@ -10,26 +10,23 @@ cluster::cluster(string __filename,int __dimension, int __num_cluster, point* __
 }
 void cluster::print() {
     for(int i=0; i<num_cluster; i++)
-        (means+i)->print();
+        means[i].print();
 }
-bool cluster::converged(cluster* old_cluster) {
-    return true;
+bool cluster::converged(cluster &old_cluster) {
+    if(old_cluster.dimension!=dimension) exit(-1);
+	else{
+		for(int i=0;i<num_cluster;i++)
+			if(means[i].dist(&old_cluster.means[i])>1e-6) return false;
+		return true;
+	}
 }
 void cluster::iterate() {
-
-}
-point* cluster::cluster_means() {
-    return means;
+	ifstream data(filename);
+	for(string line; getline(data,line);){
+		
+	}
 }
 
 int main(void) {
-    vector<int> a,b;
-    a.push_back(1);
-    a.push_back(2);
-    b.push_back(3);
-    b.push_back(4);
-    point* yay=new point[2] {a,b};
-    cluster tmp("a",2,2,yay);
-    tmp.print();
     return 0;
 }
