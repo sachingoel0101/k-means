@@ -40,7 +40,7 @@ int Cluster::get_num_cluster(){
 }
 
 void Cluster::check_converged(Cluster new_cluster) {
-    if(new_cluster.get_dimension()!=dimension || new_cluster.get_num_cluster()!=num_cluster) throw 1;
+    if(new_cluster.get_dimension()!=dimension || new_cluster.get_num_cluster()!=num_cluster) throw 3;
 	else{
 		vector<Point> tmp_means=new_cluster.get_means();
 		for(int i=0;i<num_cluster;i++){
@@ -90,6 +90,23 @@ void Cluster::finalize(){
 	for(int i=0;i<num_cluster;i++)
 		means[i].divide_int(point_count[i]);
 }
+/**
 int main(void) {
-    return 0;
+    vector<double> tmp1,tmp2,tmp3;
+	tmp1.push_back(4);
+	tmp2.push_back(15);
+	tmp3.push_back(20);
+	vector<Point> p;
+	p.push_back(tmp1);
+	p.push_back(tmp2);
+	p.push_back(tmp3);
+	Cluster c("in.txt",1,3,p);
+	c.print();
+	try{
+		c.iterate();
+	} catch(int i){
+		cout<<i<<endl;
+	}
+	c.print();
 }
+*/

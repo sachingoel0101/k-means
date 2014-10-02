@@ -10,6 +10,7 @@ Point::Point(vector<double> __point) {
 Point::Point(string __line){
 	stringstream ss(__line);
 	double tmp;
+	dimension=0;
 	while(ss>>tmp){
 		point.push_back(tmp);
 		dimension++;
@@ -17,9 +18,10 @@ Point::Point(string __line){
 }
 
 void Point::print() {
+	cout<<"Data:";
 	for (vector<double>::iterator it = point.begin() ; it != point.end(); ++it)
 		cout << *it<< ' ';
-	cout << '\n';
+	cout << "Dimension:"<<dimension<<"\n";
 }
 
 int Point::get_dimension() {
@@ -32,7 +34,7 @@ vector<double> Point::get_coordinates(){
 double Point::dist(Point p) {
 	vector<double> p_point=p.get_coordinates();
 	if(p_point.size()==0) {
-		throw;
+		throw 1;
 	} else {
 		if(p.get_dimension() != dimension) {
 			return -1;
@@ -47,7 +49,7 @@ double Point::dist(Point p) {
 }
 
 void Point::add_point(Point p){
-	if(p.get_dimension()!=dimension) throw 1;
+	if(p.get_dimension()!=dimension) throw 2;
 	else{
 		vector<double> tmp=p.get_coordinates();
 		for(int i=0;i<dimension;i++){
