@@ -4,11 +4,12 @@ class Point {
 public:
     void print();
     int get_dimension();
-    double dist(Point &p);
-    Point(vector<double> v);
-	Point(string line);
-	Point operator+(Point &p1, Point &p2);
-	Point operator/(Point &p,int i);
+	vector<double> get_coordinates();
+    double dist(Point);
+	void add_point(Point);
+	void divide_int(int);
+	Point(vector<double>);
+	Point(string);
 protected:
     vector<double> point;
     int dimension;

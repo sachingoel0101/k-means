@@ -8,13 +8,18 @@ protected:
     int num_cluster;   // k
     vector<Point> means;     // k cluster means
 	vector<int> point_count; // points in each cluster
+	bool convergence;
 public:
     Cluster(string,int,int,vector<Point>);
 	Cluster(string,int,int);  // all zero values initialized
+	vector<Point> get_means();
+	int get_dimension();
+	int get_num_cluster();
     void print();
-    bool converged(Cluster &old_cluster); // convergence criteria
+	bool converged();
+    void check_converged(Cluster); // convergence criteria
     void iterate();       // update cluster means by lloyd's
-	int belongs_to(Point &p);  // which cluster the point p belongs to
-	void update(int,Point &p); // add p to cluster index and update counts
+	int belongs_to(Point);  // which cluster the point p belongs to
+	void update(int,Point); // add p to cluster index and update counts
 	void finalize(); // divide the means by point counts
 };

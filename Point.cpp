@@ -15,6 +15,7 @@ Point::Point(string __line){
 		dimension++;
 	}
 }
+
 void Point::print() {
 	for (vector<double>::iterator it = point.begin() ; it != point.end(); ++it)
 		cout << *it<< ' ';
@@ -25,57 +26,56 @@ int Point::get_dimension() {
 	return dimension;
 }
 
-double Point::dist(Point &p) {
-	if(p.point.size()==0) {
-		return -1;
+vector<double> Point::get_coordinates(){
+	return point;
+}
+double Point::dist(Point p) {
+	vector<double> p_point=p.get_coordinates();
+	if(p_point.size()==0) {
+		throw;
 	} else {
 		if(p.get_dimension() != dimension) {
 			return -1;
 		} else {
 			double temp =0.0;
 			for(int i=0; i<dimension; i++) 
-				temp += (p.point[i]-point[i])*(p.point[i]-point[i]);
+				temp += (p_point[i]-point[i])*(p_point[i]-point[i]);
 			temp = sqrt(temp);
 			return temp;
 		}
 	}
 }
 
-Point Point::operator+(Point &p1,Point &p2){
-	if(p1.dimension!=p2.dimension) exit(-1);
+void Point::add_point(Point p){
+	if(p.get_dimension()!=dimension) throw 1;
 	else{
-		vector<double< tmp;
+		vector<double> tmp=p.get_coordinates();
 		for(int i=0;i<dimension;i++){
-			tmp.push_back(p1.point[i]+p2.point[i]);
+			point[i]+=tmp[i];
 		}
-		return Point(tmp);
 	}
 }
 
-Point Point::operator/(Point &p,int count){
-	vector<double> tmp;
-	for(int i=0;i<dimension;i++){
-		tmp.push_back(p.point[i]/count);
-	}
-	return Point(tmp);
+void Point::divide_int(int count){
+	for(int i=0;i<dimension;i++)
+		point[i]/=count;
 }
 /**int main() {
-
 	vector<double> temp1,temp2;
-	double x;
-	for(int i=0;i<2;i++) {
-		cin>>x;
-		temp1.push_back(x);
-	}
+	temp1.push_back(10);
+	temp1.push_back(12.5);
+	temp2.push_back(3);
+	temp2.push_back(1.5);
 	Point p1(temp1);
-	p1.print();
-	for(int i=0;i<2;i++) {
-		cin>>x;
-		temp2.push_back(x);
-	}
 	Point p2(temp2);
-	p2.print();
-	cout<<p1.dist(p2)<<endl;
+	string line="2.3 5.6 7.8";
+	Point p3(line);
+	p1.print();p2.print();p3.print();
+	try{
+		p1.add_point(p2);
+	} catch(...){
+		cout<<"Exception raised"<<endl;
+	}
+	p1.print();
 	return 0;
-}
-*/
+}*/
