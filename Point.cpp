@@ -31,25 +31,22 @@ int Point::get_dimension() {
 vector<double> Point::get_coordinates(){
 	return point;
 }
+
 double Point::dist(Point p) {
-	vector<double> p_point=p.get_coordinates();
-	if(p_point.size()==0) {
+	if(p.get_dimension() != dimension) {
 		throw 1;
 	} else {
-		if(p.get_dimension() != dimension) {
-			return -1;
-		} else {
-			double temp =0.0;
-			for(int i=0; i<dimension; i++) 
-				temp += (p_point[i]-point[i])*(p_point[i]-point[i]);
-			temp = sqrt(temp);
-			return temp;
-		}
+		double temp =0.0;
+		vector<double> p_point=p.get_coordinates();
+		for(int i=0; i<dimension; i++) 
+			temp += (p_point[i]-point[i])*(p_point[i]-point[i]);
+		temp = sqrt(temp);
+		return temp;
 	}
 }
 
 void Point::add_point(Point p){
-	if(p.get_dimension()!=dimension) throw 2;
+	if(p.get_dimension()!=dimension) throw 1;
 	else{
 		vector<double> tmp=p.get_coordinates();
 		for(int i=0;i<dimension;i++){
@@ -73,11 +70,6 @@ void Point::divide_int(int count){
 	string line="2.3 5.6 7.8";
 	Point p3(line);
 	p1.print();p2.print();p3.print();
-	try{
-		p1.add_point(p2);
-	} catch(...){
-		cout<<"Exception raised"<<endl;
-	}
-	p1.print();
+	cout<<p1.dist(p2)<<endl;
 	return 0;
 }*/

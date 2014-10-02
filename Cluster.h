@@ -15,6 +15,7 @@ public:
 	vector<Point> get_means();
 	int get_dimension();
 	int get_num_cluster();
+	vector<int> get_point_count();
     void print();
 	bool converged();
     void check_converged(Cluster); // convergence criteria
