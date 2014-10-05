@@ -8,7 +8,7 @@ Cluster::Cluster(string __filename,int __dimension, int __num_cluster, vector<Po
     num_cluster=__num_cluster;
     means=__means;
 	convergence=false;
-	for(int i=0;i<num_cluster;i++) point_count.push_back(1);
+	for(int i=0;i<num_cluster;i++) point_count.push_back(0);
 }
 
 Cluster::Cluster(string __filename, int __dimension, int __num_cluster){
@@ -48,12 +48,13 @@ void Cluster::check_converged(Cluster new_cluster) {
     if(new_cluster.get_dimension()!=dimension || new_cluster.get_num_cluster()!=num_cluster) throw 1;
 	else if(new_cluster.get_num_cluster()!=num_cluster) throw 2;
 	else{
+		convergence=true;
 		vector<Point> tmp_means=new_cluster.get_means();
 		for(int i=0;i<num_cluster;i++){
 			if(means[i].dist(tmp_means[i])>1e-6){
 				convergence=false;
 				break;
-			} else convergence=true;
+			}
 		}
 	}
 }
@@ -97,34 +98,3 @@ void Cluster::finalize(){
 	for(int i=0;i<num_cluster;i++)
 		if(point_count[i]!=0) means[i].divide_int(point_count[i]);
 }
-
-/**int main(void) {
-    vector<double> tmp1,tmp2,tmp3,tmp4,tmp5;
-	tmp1.push_back(5.25);
-	tmp1.push_back(5.13);
-	tmp2.push_back(5.0);
-	tmp2.push_back(2.0);
-	tmp3.push_back(2.8);
-	tmp3.push_back(2.4);
-	tmp4.push_back(1.5);
-	tmp4.push_back(6.5);
-	tmp5.push_back(3.5);
-	tmp5.push_back(5);
-	vector<Point> p;
-	p.push_back(tmp1);
-	p.push_back(tmp2);
-	p.push_back(tmp3);
-	p.push_back(tmp4);
-	p.push_back(tmp5);
-	Cluster c("a.txt",2,5,p);
-	c.print();
-	while(!c.converged()){
-		try{
-			c.iterate();
-			c.print();
-			cout<<'\n';
-		} catch(...){
-			cout<<"Exception"<<endl;
-		}
-	}
-}*/
