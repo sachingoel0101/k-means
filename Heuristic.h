@@ -3,7 +3,7 @@
 using namespace std;
 class Heuristic{
 public:
-    Point h1_center(vector<Point>);
+    Point h1_center(vector<Point> sampled_set,int m);
 private:
-	vector<Point> h1_subset(vector<Point>);
+	vector<Point> h1_subset(vector<Point> sampled_set, int m);
 };

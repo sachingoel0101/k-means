@@ -3,7 +3,7 @@
 
 using namespace std;
 
-Point Heuristic::h1_center(vector<Point> sampled_set) {
+Point Heuristic::h1_center(vector<Point> sampled_set, int m) {
 	vector<Point> subset=h1_subset(sampled_set);
 	int dim=sampled_set[0].size();
 	vector<double> tmp;
@@ -16,7 +16,7 @@ Point Heuristic::h1_center(vector<Point> sampled_set) {
 }
 
 
-vector<Point> Heuristic::h1_subset(vector<Point> sampled_set) {
+vector<Point> Heuristic::h1_subset(vector<Point> sampled_set, int m) {
 
     //choose top m candidates
 	int n=sampled_set.size();
@@ -48,15 +48,23 @@ vector<Point> Heuristic::h1_subset(vector<Point> sampled_set) {
     for(int i=0; i<n; i++) {
         int limit = min(10,n-1);
 
-        for(int j=1; j<=limit; j++) {
+        for(int j=0; j<=limit; j++) {
             ranks[matrix[i][j].second].first++;
         }
     }
 
-    sort(ranks.begin(),ranks.end());
+    reverse_sort(ranks.begin(),ranks.end());
 
+	vector<Point> to_ret(m);
+
+	for(int i=0;i<m;i++) {
+		to_ret[i] = sampled_set[ranks[i].second];
+	}	
+	/*
     int dim = candidates[i].size();
     vector<int> ans(dim);
     for(int i=0; i<dim; i++)
         ans[i]=0;
+	*/
+	return to_ret;
 }
