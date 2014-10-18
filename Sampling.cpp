@@ -1,59 +1,31 @@
 #include <bits/stdc++.h>
 #include "Sampling.h"
+
 using namespace std;
 
-Sampling::Sampling(string __file, int __N) {
-    N =__N;
-    file.open(__file.c_str());
+Sampling::Sampling(string __file_name) {
+    file_name=__file_name;
+	num_pts=0;
+	ifstream file;
+	file.open(file_name.c_str());
+	string line;
+	while(getline(file,line)){
+		num_pts++;
+	}
+	file.close();
 }
 
-Sampling::~Sampling() {
-    file.close();
-}
-
-vector<Point> Sampling::generate2(vector<Point> centers) {
-    srand(time(NULL));
-    vector<int> ans;
-    int remaining = N;
-    vector<Point> current_set;
+vector<Point> Sampling::d2_sample(vector<Point> centers,int N) {
     if(centers.size()==0) {
-        //sample uniformly
+		return uniform_sample(N);
+	}
+	else {
+		ifstream file;
+		file.open(file_name.c_str());
         string line;
         vector<double> probabilities;
-        while(getline(file,line)) {
-            probabilities.push_back(1.0);
-        }
-        random_device rd;
-        mt19937 gen(rd());
-        discrete_distribution<> d(probabilities.begin(), probabilities.end());
-        while(ans.size()<remaining) {
-            int chosen = d(gen);
-            ans.push_back(chosen);
-        }
-		//sort the choosen points
-		sort(ans.begin(),ans.end());
-        vector<int>::iterator it=ans.begin();
-        int temp =0;
-        file.clear();
-        file.seekg(0, ios_base::beg);
-		getline(file,line);
-        while(true) {
-			if(file.eof()) break;
-            if(temp== (*it)) {
-                Point p1(line);
-                current_set.push_back(p1);
-                it++;
-                if(it==ans.end()) break;
-            } else {
-				getline(file,line);
-                temp++;
-            }
-        }
-    } else {
-        //sample with probabilities equal to min distance
-        string line;
-        vector<double> probabilities;
-        while(getline(file,line)) {
+		for(int line_no=0;line_no<num_pts;line_no++){
+        	getline(file,line);
             Point p1(line);
             double min_dist = p1.dist(centers[0]);
             for(int i=1; i< centers.size(); i++) {
@@ -62,31 +34,65 @@ vector<Point> Sampling::generate2(vector<Point> centers) {
             }
             probabilities.push_back(min_dist);
         }
-        random_device rd;
-        mt19937 gen(rd());
+		file.close();
         discrete_distribution<> d(probabilities.begin(), probabilities.end());
-        while(ans.size()<remaining) {
-            int chosen = d(gen);
-            ans.push_back(chosen);
-        }
-		sort(ans.begin(),ans.end());
-        vector<int>::iterator it=ans.begin();
-        int temp =0;
-        file.clear();
-        file.seekg(0, ios_base::beg);
-		getline(file,line);
-        while(true) {
-			if(file.eof()) break;
-            if(temp== (*it)) {
-                Point p1(line);
-                current_set.push_back(p1);
-                it++;
-                if(it==ans.end()) break;
-            } else {
-				getline(file,line);
-                temp++;
-            }
-        }
+		return pick_points(sample_indices(d,N));
     }
-    return current_set;
+}
+
+vector<Point> Sampling::uniform_sample(int N) {
+	vector<double> probabilities;
+	for(int i=0;i<num_pts;i++){
+		probabilities.push_back(1.0);
+	}
+	discrete_distribution<> d(probabilities.begin(), probabilities.end());
+	return pick_points(sample_indices(d,N));
+}
+
+vector<int> Sampling:: sample_indices(discrete_distribution<> d,int N) {
+	srand(time(NULL));
+	random_device rd;
+	mt19937 gen(rd());
+	vector<int> ans;
+	while(ans.size()<N) {
+		int chosen = d(gen);
+		ans.push_back(chosen);
+	}
+	sort(ans.begin(),ans.end());
+	/**
+	for(vector<int>::iterator it=ans.begin();it!=ans.end();++it){
+		cout<<*it<<" "<<endl;
+	}
+	*/
+	return ans;
+}
+
+vector<Point> Sampling::pick_points(vector<int> indices) {
+	vector<Point> current_set;
+	vector<int>::iterator it=indices.begin();
+	int temp =0;
+	ifstream file;
+	file.open(file_name.c_str());
+	string line;
+	getline(file,line);
+	while(true) {
+		if(file.eof()) break;
+		if(temp== (*it)) {
+			Point p1(line);
+			current_set.push_back(p1);
+			it++;
+			if(it==indices.end()) break;
+		} else {
+			getline(file,line);
+			temp++;
+		}
+	}
+	file.close();	
+	/**
+	for(vector<Point>::iterator it=current_set.begin();it!=current_set.end();++it){
+		Point t=*it;
+		t.print();
+	}
+	*/
+	return current_set;
 }

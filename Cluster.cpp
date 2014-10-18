@@ -1,5 +1,6 @@
 #include <bits/stdc++.h>
 #include "Cluster.h"
+
 using namespace std;
 
 Cluster::Cluster(string __filename,int __dimension, int __num_cluster, vector<Point> __means) {
@@ -22,14 +23,6 @@ Cluster::Cluster(string __filename, int __dimension, int __num_cluster){
 	for(int i=0;i<num_cluster;i++) means.push_back(tmp);
 }
 
-void Cluster::print() {
-    for(int i=0; i<num_cluster; i++)
-        means[i].print();
-	cout<<"Point count";
-	for(int i=0;i<num_cluster;i++) cout<<point_count[i]<<' ';
-	cout<<'\n';
-}
-
 vector<Point> Cluster::get_means(){
 	return means;
 }
@@ -44,8 +37,25 @@ int Cluster::get_num_cluster(){
 vector<int> Cluster::get_point_count(){
 	return point_count;
 }
+
+
+void Cluster::print() {
+    for(int i=0; i<num_cluster; i++){
+        means[i].print();
+	}
+	cout<<"Point counts:\n";
+	for(int i=0;i<num_cluster;i++){
+		cout<<point_count[i]<<' ';
+	}
+	cout<<'\n';
+}
+
+bool Cluster::converged(){
+	return convergence;
+}
+
 void Cluster::check_converged(Cluster new_cluster) {
-    if(new_cluster.get_dimension()!=dimension || new_cluster.get_num_cluster()!=num_cluster) throw 1;
+    if(new_cluster.get_dimension()!=dimension) throw 1;
 	else if(new_cluster.get_num_cluster()!=num_cluster) throw 2;
 	else{
 		convergence=true;
@@ -58,10 +68,6 @@ void Cluster::check_converged(Cluster new_cluster) {
 		}
 	}
 }
-
-bool Cluster::converged(){
-	return convergence;
-} 
 
 void Cluster::iterate() {
 	ifstream data;

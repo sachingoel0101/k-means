@@ -1,5 +1,6 @@
 #include <bits/stdc++.h>
 #include "Point.h"
+
 using namespace std;
 
 Point::Point(vector<double> __point) {
@@ -19,8 +20,9 @@ Point::Point(string __line){
 
 void Point::print() {
 	cout<<"Data:";
-	for (vector<double>::iterator it = point.begin() ; it != point.end(); ++it)
+	for (vector<double>::iterator it=point.begin();it!=point.end();++it){
 		cout << *it<< ' ';
+	}
 	cout << "Dimension:"<<dimension<<"\n";
 }
 
@@ -59,7 +61,8 @@ void Point::divide_int(int count){
 	for(int i=0;i<dimension;i++)
 		point[i]/=count;
 }
-/**int main() {
+/**
+int main() {
 	vector<double> temp1,temp2;
 	temp1.push_back(10);
 	temp1.push_back(12.5);
@@ -71,5 +74,10 @@ void Point::divide_int(int count){
 	Point p3(line);
 	p1.print();p2.print();p3.print();
 	cout<<p1.dist(p2)<<endl;
+	p1.add_point(p2);
+	p1.print();
+	p1.add_point(p3);
+	p1.print();
 	return 0;
-}*/
+}
+*/
