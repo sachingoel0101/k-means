@@ -61,6 +61,7 @@ void Point::divide_int(int count){
 	for(int i=0;i<dimension;i++)
 		point[i]/=count;
 }
+
 /**
 int main() {
 	vector<double> temp1,temp2;

@@ -2,7 +2,7 @@
 
 using namespace std;
 
-/**
+/* *
  *
  * the vector point stores all the coordinates
  * dist return euclidean distance

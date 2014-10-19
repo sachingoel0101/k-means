@@ -8,6 +8,7 @@ using namespace std;
  *
  *
  * */
+
 class Cluster {
 protected:
     string filename; 
@@ -26,6 +27,7 @@ public:
     void print();
 	bool converged();
     void check_converged(Cluster);
+	double get_cost();
     void iterate();
 	int belongs_to(Point);
 	void update(int,Point);
