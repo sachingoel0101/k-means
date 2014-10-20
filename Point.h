@@ -2,10 +2,13 @@
 
 using namespace std;
 
-/* *
+#ifndef POINT_H
+#define POINT_H
+
+/**
  *
  * the vector point stores all the coordinates
- * dist return euclidean distance
+ * dist returns euclidean distance
  * add_point adds the coordinates to "this"
  * divide_int scales coordinates of "this"
  *
@@ -15,6 +18,7 @@ class Point {
 public:
 	Point(vector<double>);
 	Point(string);
+	Point(void);
     void print();
     int get_dimension();
 	vector<double> get_coordinates();
@@ -25,3 +29,5 @@ protected:
     vector<double> point;
     int dimension;
 };
+
+#endif

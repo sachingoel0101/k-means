@@ -18,12 +18,16 @@ Point::Point(string __line){
 	}
 }
 
+Point::Point(void){
+	dimension=0;
+}
 void Point::print() {
-	cout<<"Data:";
+	cout << "Dimension:"<<dimension;
+	cout<<" Data:( ";
 	for (vector<double>::iterator it=point.begin();it!=point.end();++it){
-		cout << *it<< ' ';
+		cout<< *it<< ' ';
 	}
-	cout << "Dimension:"<<dimension<<"\n";
+	cout<<")\n";
 }
 
 int Point::get_dimension() {
@@ -36,6 +40,7 @@ vector<double> Point::get_coordinates(){
 
 double Point::dist(Point p) {
 	if(p.get_dimension() != dimension) {
+		cout<<"Dimension mismatch error"<<endl;
 		throw 1;
 	} else {
 		double temp =0.0;
@@ -48,7 +53,10 @@ double Point::dist(Point p) {
 }
 
 void Point::add_point(Point p){
-	if(p.get_dimension()!=dimension) throw 1;
+	if(p.get_dimension()!=dimension){
+		cout<<"Dimension mismatch error"<<endl;
+		throw 1;
+	}
 	else{
 		vector<double> tmp=p.get_coordinates();
 		for(int i=0;i<dimension;i++){
@@ -58,8 +66,14 @@ void Point::add_point(Point p){
 }
 
 void Point::divide_int(int count){
-	for(int i=0;i<dimension;i++)
-		point[i]/=count;
+	if(count==0){
+		cout<<"Division by zero error"<<endl;
+		throw 0;
+	} else{
+		for(int i=0;i<dimension;i++){
+			point[i]/=count;
+		}
+	}
 }
 
 /**
@@ -73,12 +87,25 @@ int main() {
 	Point p2(temp2);
 	string line="2.3 5.6 7.8";
 	Point p3(line);
-	p1.print();p2.print();p3.print();
+	Point p4;
+	Point p5;
+	p1.print();p2.print();p3.print();p4.print();p5.print();
 	cout<<p1.dist(p2)<<endl;
 	p1.add_point(p2);
 	p1.print();
-	p1.add_point(p3);
-	p1.print();
+	try{
+		p1.add_point(p3);
+	} catch(...){
+		// do nothing
+	}
+	cout<<p4.dist(p5)<<endl;
+	p4.add_point(p4);
+	p4.print();
+	try{
+		p3.divide_int(0);
+	} catch(...){
+		// do nothing
+	}
 	return 0;
 }
 */

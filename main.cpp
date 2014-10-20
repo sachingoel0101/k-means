@@ -1,30 +1,29 @@
+#include <bits/stdc++.h>
+#include "Cluster.h"
+#include "Sampling.h"
+
+using namespace std;
+
 int main(void) {
-    vector<double> tmp1,tmp2,tmp3,tmp4,tmp5;
-	tmp1.push_back(5.25);
-	tmp1.push_back(5.13);
-	tmp2.push_back(5.0);
-	tmp2.push_back(2.0);
-	tmp3.push_back(2.8);
-	tmp3.push_back(2.4);
-	tmp4.push_back(1.5);
-	tmp4.push_back(6.5);
-	tmp5.push_back(3.5);
-	tmp5.push_back(5);
-	vector<Point> p;
-	p.push_back(tmp1);
-	p.push_back(tmp2);
-	p.push_back(tmp3);
-	p.push_back(tmp4);
-	p.push_back(tmp5);
-	Cluster c("a.txt",2,5,p);
-	c.print();
-	while(!c.converged()){
-		try{
-			c.iterate();
-			c.print();
-			cout<<'\n';
-		} catch(...){
-			cout<<"Exception"<<endl;
-		}
+	Sampling sampler("data/a.txt");
+	vector<Point> p=sampler.uniform_sample(5);
+	vector<double> costs;
+	Cluster c1("data/a.txt",p);
+	costs.push_back(c1.get_cost());
+	c1.print();
+	Cluster c2=c1.iterate();
+	costs.push_back(c2.get_cost());
+	c2.print();
+	int iter=1;
+	while(c1.get_cost()-c2.get_cost()>0.000001){
+		c2.print();
+		c1=c2;
+		c2=c1.iterate();
+		costs.push_back(c2.get_cost());
+		iter++;
 	}
+	cout<<iter<<endl;
+	for(vector<double>::iterator it=costs.begin();it!=costs.end();++it)
+		cout<<*it<<'\n';
+	return 0;
 }

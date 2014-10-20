@@ -4,21 +4,20 @@
 using namespace std;
 
 Point Heuristic::h1_center(vector<Point> sampled_set, int m) {
-	vector<Point> subset=h1_subset(sampled_set);
-	int dim=sampled_set[0].size();
+	vector<Point> subset=h1_subset(sampled_set,m);
+	int dim=sampled_set[0].get_dimension();
 	vector<double> tmp;
 	for(int i=0;i<dim;i++) tmp.push_back(0);
 	Point ret(tmp);
 	for(int i=0;i<subset.size();i++)
-		ret.add(subset[i]);
-	ret.divide(subset.size());
+		ret.add_point(subset[i]);
+	ret.divide_int(subset.size());
 	return ret;
 }
 
 
 vector<Point> Heuristic::h1_subset(vector<Point> sampled_set, int m) {
 
-    //choose top m candidates
 	int n=sampled_set.size();
     vector<vector<pair<double,int> > > matrix(n);
 
@@ -44,7 +43,6 @@ vector<Point> Heuristic::h1_subset(vector<Point> sampled_set, int m) {
     for(int i=0; i<n; i++)
         ranks[i]=make_pair(0,i);
 
-    //counting only top-10 ranks
     for(int i=0; i<n; i++) {
         int limit = min(10,n-1);
 
@@ -54,17 +52,10 @@ vector<Point> Heuristic::h1_subset(vector<Point> sampled_set, int m) {
     }
 
     reverse_sort(ranks.begin(),ranks.end());
-
 	vector<Point> to_ret(m);
 
 	for(int i=0;i<m;i++) {
 		to_ret[i] = sampled_set[ranks[i].second];
-	}	
-	/*
-    int dim = candidates[i].size();
-    vector<int> ans(dim);
-    for(int i=0; i<dim; i++)
-        ans[i]=0;
-	*/
+	}
 	return to_ret;
 }

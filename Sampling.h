@@ -4,6 +4,9 @@
 
 using namespace std;
 
+#ifndef SAMPLING_H
+#define SAMPLING_H
+
 /**
  *
  * The field file_name contains the name of file where all the data points are.
@@ -26,3 +29,5 @@ protected:
     string file_name;
 	int num_pts;
 };
+
+#endif

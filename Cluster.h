@@ -3,33 +3,32 @@
 
 using namespace std;
 
+#ifndef CLUSTER_H
+#define CLUSTER_H
+
 /**
  *
- *
+ * scale_cluster divides all cluster means by the corresponding values in the argument vector
+ * get_cost assigns the voronoi partitions and then calculates cost based on euclidean distance
  *
  * */
-
 class Cluster {
 protected:
     string filename; 
     int dimension;   
     int num_cluster; 
     vector<Point> means;
-	vector<int> point_count;
-	bool convergence;
 public:
-    Cluster(string,int,int,vector<Point>);
-	Cluster(string,int,int);
+    Cluster(string,vector<Point>);
+	Cluster(void);
 	vector<Point> get_means();
 	int get_dimension();
 	int get_num_cluster();
-	vector<int> get_point_count();
     void print();
-	bool converged();
-    void check_converged(Cluster);
 	double get_cost();
-    void iterate();
+    Cluster iterate();
 	int belongs_to(Point);
-	void update(int,Point);
-	void finalize();
+	void scale_cluster(vector<int>);
 };
+
+#endif
