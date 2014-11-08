@@ -12,8 +12,8 @@ public class Gendata{
 		for(int i=0;i<5;i++){
 			r0=new Random();
 			r1=new Random();
-			for(int j=0;j<1000;j++){
-				System.out.print(means[i][0]+r0.nextDouble());
+			for(int j=0;j<100000;j++){
+				System.out.print(means[i][0]+r0.nextDouble()+" ");
 				System.out.println(means[i][1]+r1.nextDouble());
 			}
 		}
